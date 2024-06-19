@@ -35,14 +35,14 @@ export default definePlugin({
     description: "Spoiler attachments based on filenames and links.",
     patches: [
         {
-            find: "SimpleMessageAccessories:",
+            find: ".renderSuppressConfirmModal()",
             replacement: [
                 {
                     match: /function \i\((\i),\i\){return/,
                     replace: "$& $self.shouldSpoiler($1.originalItem.filename) || "
                 },
                 {
-                    match: /(\i)=\(0,\i\.getOb.{27,35}\);(?=if\((\i).type)/,
+                    match: /(\i)=\(0,\i.{10,20};(?=if\((\i).type)/,
                     replace: "$&$1=$self.spoilerLink($1,$2.url,$2.type);"
                 }
             ]
